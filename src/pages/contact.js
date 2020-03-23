@@ -1,12 +1,10 @@
 import React from "react"
-import Footer from "../components/footer"
-import Header from "../components/header"
+import Layout from "../components/layout"
 
 
 const Contact = (props) => {
   return (
-    <div>
-      <Header/>
+    <Layout>
       <h1>Contact details</h1>
       <ul>
         <li>Telephone: 733 332 231</li>
@@ -14,8 +12,7 @@ const Contact = (props) => {
         <li>Twitter <a href="http://twitter.com/zeglarz" target="_blank">@zeglarz</a></li>
 
       </ul>
-      <Footer/>
-    </div>
+    </Layout>
   )
 }
 
