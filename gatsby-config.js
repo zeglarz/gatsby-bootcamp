@@ -9,5 +9,15 @@ module.exports = {
     title: "Gatsby Full-Stack Bootcamp",
     author: "Konrad Rudnicki",
   },
-  plugins: ["gatsby-plugin-sass"],
+  plugins: [
+    "gatsby-plugin-sass",
+    {
+      resolve: "gatsby-source-filesystem",
+      options: {
+        name: "src",
+        path: `${__dirname}/src/`,
+      },
+    },
+    "gatsby-transformer-remark",
+  ],
 }
