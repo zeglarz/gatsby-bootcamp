@@ -1,9 +1,8 @@
 import React from "react"
 import Layout from "../components/layout"
 import { graphql, useStaticQuery } from "gatsby"
-import { Link } from "gatsby"
 
-const BlogPage = (props) => {
+const Blog = ({ location }) => {
   const data = useStaticQuery(graphql`
       query {
           allMarkdownRemark {
@@ -23,20 +22,17 @@ const BlogPage = (props) => {
           }
       }
   `)
+
+  const currPost = data.allMarkdownRemark.edges.find(post => post.node.fields.slug === location.pathname.split("/")[2])
+  console.log(currPost)
   return (
     <Layout>
-      <h1>My blog</h1>
-      <p>Posts will show up here later on.</p>
-      <h2>Posts</h2>
-      <ol>
-        {data.allMarkdownRemark.edges.sort((a, b) => Date.parse(b.node.frontmatter.date) - Date.parse(a.node.frontmatter.date)).map(post =>
-          <li>
-            <Link to={`/blog/${post.node.fields.slug}`}><h1>{post.node.frontmatter.title}</h1></Link>
-            <p>{post.node.frontmatter.date}</p><p>{post.node.excerpt}</p>
-          </li>)}
-      </ol>
+      <h1>{currPost.node.frontmatter.title}</h1>
+      <p>{currPost.node.frontmatter.date}</p>
+      <p>{currPost.node.excerpt}</p>
+
     </Layout>
   )
 }
 
-export default BlogPage
+export default Blog
