@@ -27,7 +27,6 @@ const BlogPage = (props) => {
   return (
     <Layout>
       <h1>My blog</h1>
-      <p>Posts will show up here later on.</p>
       <h2>Posts</h2>
       <ol className={blogStyles.posts}>
         {data.allMarkdownRemark.edges.sort((a, b) => Date.parse(b.node.frontmatter.date) - Date.parse(a.node.frontmatter.date)).map(post =>
