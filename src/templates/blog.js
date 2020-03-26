@@ -2,6 +2,7 @@ import React from 'react';
 import Layout from '../components/layout';
 import { graphql } from 'gatsby';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
+import Head from '../components/head';
 
 export const query = graphql`
     query (
@@ -40,12 +41,22 @@ const Blog = ({ data }) => {
     html: data.markdownRemark.html
   };
 
+  const options = {
+    renderNode: {
+      'embedded-asset-block': (node) => {
+        const alt = node.data.target.fields.title['en-US'];
+        const url = node.data.target.fields.file['en-US'].url;
+        return <img alt={alt} src={url}/>;
+      }
+    }
+  };
 
   return (
     <Layout>
+      <Head title={flattenMd.title}/>
       <h1>{flattenMd.title}</h1>
       <p>{flattenMd.date}</p>
-      {flattenMd.hasOwnProperty('body') ? documentToReactComponents(flattenMd.body.json) :
+      {flattenMd.hasOwnProperty('body') ? documentToReactComponents(flattenMd.body.json, options) :
         <div dangerouslySetInnerHTML={{ __html: flattenMd.html }}></div>}
     </Layout>
   );

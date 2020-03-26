@@ -1,10 +1,12 @@
-import React from "react"
-import Layout from "../components/layout"
+import React from 'react';
+import Layout from '../components/layout';
+import Head from '../components/head';
 
 
 const Contact = (props) => {
   return (
     <Layout>
+      <Head title='Contact'/>
       <h1>Contact details</h1>
       <ul>
         <li>Telephone: 733 332 231</li>
@@ -13,7 +15,7 @@ const Contact = (props) => {
 
       </ul>
     </Layout>
-  )
-}
+  );
+};
 
-export default Contact
+export default Contact;

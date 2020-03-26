@@ -3,6 +3,7 @@ import Layout from '../components/layout';
 import { graphql, useStaticQuery } from 'gatsby';
 import { Link } from 'gatsby';
 import blogStyles from './blog.module.scss';
+import Head from '../components/head';
 
 const BlogPage = (props) => {
   const data = useStaticQuery(graphql`
@@ -48,6 +49,7 @@ const BlogPage = (props) => {
   const postArr = [...flattenMd, ...data.allContentfulBlogPost.edges];
   return (
     <Layout>
+      <Head title='Blog'/>
       <h1>My blog</h1>
       <h2>Posts</h2>
       <ol className={blogStyles.posts}>
