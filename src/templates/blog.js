@@ -1,6 +1,7 @@
 import React from 'react';
 import Layout from '../components/layout';
 import { graphql } from 'gatsby';
+import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 
 export const query = graphql`
     query (
@@ -22,7 +23,10 @@ export const query = graphql`
         }
         contentfulBlogPost(slug: {eq: $slug}) {
             title
-            date: publishedDate
+            date: publishedDate(formatString: "YYYY-MM-DD")
+            body {
+                json
+            }
         }
     }
 `;
@@ -32,7 +36,8 @@ const Blog = ({ data }) => {
 
   const flattenMd = data.contentfulBlogPost || {
     title: data.markdownRemark.frontmatter.title,
-    date: data.markdownRemark.frontmatter.date
+    date: data.markdownRemark.frontmatter.date,
+    html: data.markdownRemark.html
   };
 
 
@@ -40,7 +45,8 @@ const Blog = ({ data }) => {
     <Layout>
       <h1>{flattenMd.title}</h1>
       <p>{flattenMd.date}</p>
-
+      {flattenMd.hasOwnProperty('body') ? documentToReactComponents(flattenMd.body.json) :
+        <div dangerouslySetInnerHTML={{ __html: flattenMd.html }}></div>}
     </Layout>
   );
 };
