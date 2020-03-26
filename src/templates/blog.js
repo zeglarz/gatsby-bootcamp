@@ -20,17 +20,26 @@ export const query = graphql`
             }
             html
         }
+        contentfulBlogPost(slug: {eq: $slug}) {
+            title
+            date: publishedDate
+        }
     }
 `;
 
-const Blog = ({ data: { markdownRemark: { frontmatter: { title, date }, html } } }) => {
+
+const Blog = ({ data }) => {
+
+  const flattenMd = data.contentfulBlogPost || {
+    title: data.markdownRemark.frontmatter.title,
+    date: data.markdownRemark.frontmatter.date
+  };
 
 
   return (
     <Layout>
-      <h1>{title}</h1>
-      <p>{date}</p>
-      <div dangerouslySetInnerHTML={{ __html: html }}/>
+      <h1>{flattenMd.title}</h1>
+      <p>{flattenMd.date}</p>
 
     </Layout>
   );
